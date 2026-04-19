@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Add
+import androidx.compose.material.icons.outlined.Calculate
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
@@ -75,7 +76,7 @@ private fun ExtendedButtonWithIconComponentView() {
         ) {
             ExtendedButtonWithIconComponent(
                 text = "Calcular Avaliação",
-                icon = Icons.Outlined.Add,
+                icon = Icons.Outlined.Calculate,
                 onClick = {}
             )
         }

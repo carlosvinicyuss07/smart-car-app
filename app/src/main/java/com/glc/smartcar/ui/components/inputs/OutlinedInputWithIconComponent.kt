@@ -16,6 +16,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.DirectionsCar
 import androidx.compose.material.icons.outlined.KeyboardArrowDown
 import androidx.compose.material.icons.outlined.ShoppingCart
 import androidx.compose.material3.Icon
@@ -71,7 +72,6 @@ fun OutlinedInputWithIconComponent(
             modifier = containerModifier,
             verticalAlignment = Alignment.CenterVertically
         ) {
-            // Icon Container
             Box(
                 modifier = Modifier
                     .size(36.dp)
@@ -90,7 +90,6 @@ fun OutlinedInputWithIconComponent(
             }
             Spacer(modifier = Modifier.width(12.dp))
             
-            // Input Area
             Box(modifier = Modifier.weight(1f)) {
                 if (value.isEmpty()) {
                     Text(
@@ -147,7 +146,7 @@ private fun OutlinedInputWithIconComponentPreview() {
                 OutlinedInputWithIconComponent(
                     label = "Marca",
                     placeholder = "Selecione a marca",
-                    icon = Icons.Outlined.ShoppingCart,
+                    icon = Icons.Outlined.DirectionsCar,
                     value = "",
                     onValueChange = {},
                     trailingIcon = Icons.Outlined.KeyboardArrowDown,
