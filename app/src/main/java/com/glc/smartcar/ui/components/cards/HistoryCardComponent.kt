@@ -92,7 +92,7 @@ fun HistoryCardComponent(
                     contentAlignment = Alignment.Center
                 ) {
                     Icon(
-                        imageVector = Icons.Outlined.DirectionsCar, // Directions Car
+                        imageVector = Icons.Outlined.DirectionsCar,
                         contentDescription = null,
                         tint = MaterialTheme.colorScheme.primary,
                         modifier = Modifier.size(24.dp)
