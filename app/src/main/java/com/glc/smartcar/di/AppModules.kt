@@ -1,8 +1,58 @@
 package com.glc.smartcar.di
 
+import com.glc.smartcar.BuildConfig
+import com.glc.smartcar.data.api.ApiService
+import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
+import kotlinx.serialization.json.Json
+import okhttp3.Interceptor
+import okhttp3.MediaType.Companion.toMediaType
+import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
 import org.koin.dsl.module
+import retrofit2.Retrofit
 
 val networkModule = module {
+
+    single {
+        Json {
+            ignoreUnknownKeys = true
+            coerceInputValues = true
+        }
+    }
+
+    single {
+
+        val loggingInterceptor = HttpLoggingInterceptor().apply {
+            level = HttpLoggingInterceptor.Level.BODY
+        }
+
+        val authInterceptor = Interceptor { chain ->
+            val token = ""
+
+            val request = chain.request().newBuilder()
+            if (token.isNotEmpty()) {
+                request.addHeader("Authorization", "Bearer $token")
+            }
+            chain.proceed(request.build())
+        }
+
+        OkHttpClient.Builder()
+            .addInterceptor(loggingInterceptor)
+            .addInterceptor(authInterceptor)
+            .build()
+    }
+
+    single {
+        val contentType = "application/json".toMediaType()
+
+        Retrofit.Builder()
+            .baseUrl(BuildConfig.BASE_URL)
+            .client(get())
+            .addConverterFactory(get<Json>().asConverterFactory(contentType))
+            .build()
+    }
+
+    single { get<Retrofit>().create(ApiService::class.java) }
 
 }
 
