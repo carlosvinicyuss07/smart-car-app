@@ -2,16 +2,20 @@ package com.glc.smartcar.di
 
 import com.glc.smartcar.BuildConfig
 import com.glc.smartcar.data.api.ApiService
+import com.glc.smartcar.data.repository.TokenManager
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import kotlinx.serialization.json.Json
 import okhttp3.Interceptor
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
+import org.koin.android.ext.koin.androidContext
 import org.koin.dsl.module
 import retrofit2.Retrofit
 
 val networkModule = module {
+
+    single { TokenManager(androidContext()) }
 
     single {
         Json {
@@ -27,10 +31,12 @@ val networkModule = module {
         }
 
         val authInterceptor = Interceptor { chain ->
-            val token = ""
+            val tokenManager: TokenManager = get()
+            val token = tokenManager.obterToken()
 
             val request = chain.request().newBuilder()
-            if (token.isNotEmpty()) {
+
+            if (!token.isNullOrEmpty()) {
                 request.addHeader("Authorization", "Bearer $token")
             }
             chain.proceed(request.build())
