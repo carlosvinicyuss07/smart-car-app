@@ -2,7 +2,13 @@ package com.glc.smartcar.di
 
 import com.glc.smartcar.BuildConfig
 import com.glc.smartcar.data.api.ApiService
+import com.glc.smartcar.data.repository.AuthRepositoryInterface
+import com.glc.smartcar.data.repository.AvaliacaoRepositoryInterface
+import com.glc.smartcar.data.repository.FipeRepositoryInterface
 import com.glc.smartcar.data.repository.TokenManager
+import com.glc.smartcar.data.repository.impl.AuthRepository
+import com.glc.smartcar.data.repository.impl.AvaliacaoRepository
+import com.glc.smartcar.data.repository.impl.FipeRepository
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import kotlinx.serialization.json.Json
 import okhttp3.Interceptor
@@ -62,6 +68,24 @@ val networkModule = module {
 
 }
 
-val appModule = module {
+val repositoryModule = module {
 
+    single<AuthRepositoryInterface> {
+        AuthRepository(
+            apiService = get(),
+            tokenManager = get()
+        )
+    }
+
+    single<AvaliacaoRepositoryInterface> {
+        AvaliacaoRepository(
+            apiService = get()
+        )
+    }
+
+    single<FipeRepositoryInterface> {
+        FipeRepository(
+            apiService = get()
+        )
+    }
 }
