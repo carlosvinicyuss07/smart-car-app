@@ -4,7 +4,7 @@ import com.glc.smartcar.data.api.ApiService
 import com.glc.smartcar.data.model.avaliacao.AvaliacaoRequest
 import com.glc.smartcar.data.model.avaliacao.AvaliacaoResponse
 import com.glc.smartcar.data.repository.AvaliacaoRepositoryInterface
-import com.glc.smartcar.data.repository.Result
+import com.glc.smartcar.core.Result
 
 class AvaliacaoRepository(
     private val apiService: ApiService

@@ -5,7 +5,7 @@ import com.glc.smartcar.data.api.ApiService
 import com.glc.smartcar.data.repository.AuthRepositoryInterface
 import com.glc.smartcar.data.repository.AvaliacaoRepositoryInterface
 import com.glc.smartcar.data.repository.FipeRepositoryInterface
-import com.glc.smartcar.data.repository.TokenManager
+import com.glc.smartcar.data.local.TokenManager
 import com.glc.smartcar.data.repository.impl.AuthRepository
 import com.glc.smartcar.data.repository.impl.AvaliacaoRepository
 import com.glc.smartcar.data.repository.impl.FipeRepository

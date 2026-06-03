@@ -1,5 +1,6 @@
 package com.glc.smartcar.data.repository
 
+import com.glc.smartcar.core.Result
 import com.glc.smartcar.data.model.avaliacao.AvaliacaoRequest
 import com.glc.smartcar.data.model.avaliacao.AvaliacaoResponse
 

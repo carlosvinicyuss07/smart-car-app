@@ -4,8 +4,8 @@ import com.glc.smartcar.data.api.ApiService
 import com.glc.smartcar.data.model.auth.CadastroRequest
 import com.glc.smartcar.data.model.auth.LoginRequest
 import com.glc.smartcar.data.repository.AuthRepositoryInterface
-import com.glc.smartcar.data.repository.Result
-import com.glc.smartcar.data.repository.TokenManager
+import com.glc.smartcar.core.Result
+import com.glc.smartcar.data.local.TokenManager
 
 class AuthRepository(
     private val apiService: ApiService,
