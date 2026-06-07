@@ -9,6 +9,7 @@ import com.glc.smartcar.data.local.TokenManager
 import com.glc.smartcar.data.repository.impl.AuthRepository
 import com.glc.smartcar.data.repository.impl.AvaliacaoRepository
 import com.glc.smartcar.data.repository.impl.FipeRepository
+import com.glc.smartcar.ui.auth.AuthViewModel
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import kotlinx.serialization.json.Json
 import okhttp3.Interceptor
@@ -16,6 +17,7 @@ import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import org.koin.android.ext.koin.androidContext
+import org.koin.core.module.dsl.viewModelOf
 import org.koin.dsl.module
 import retrofit2.Retrofit
 
@@ -88,4 +90,9 @@ val repositoryModule = module {
             apiService = get()
         )
     }
+}
+
+val viewModelModule = module {
+
+    viewModelOf(::AuthViewModel)
 }
