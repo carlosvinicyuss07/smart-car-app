@@ -45,8 +45,6 @@ import com.glc.smartcar.data.model.avaliacao.AvaliacaoResponse
 import com.glc.smartcar.ui.components.cards.EvaluationStatus
 import com.glc.smartcar.ui.components.cards.HistoryCardComponent
 import com.glc.smartcar.ui.components.inputs.SearchInputComponent
-import com.glc.smartcar.ui.components.navigation.BottomNavBarComponent
-import com.glc.smartcar.ui.components.navigation.BottomNavItem
 import com.glc.smartcar.ui.components.topbar.TopBarComponent
 import com.glc.smartcar.ui.theme.SmartCarTheme
 import kotlinx.coroutines.flow.collectLatest
@@ -114,12 +112,6 @@ fun HistoryScreenContent(
                 }
                 Spacer(modifier = Modifier.height(8.dp))
             }
-        },
-        bottomBar = {
-            BottomNavBarComponent(
-                currentRoute = BottomNavItem.HISTORY,
-                onItemSelected = { onEvent(HistoryUiEvent.OnBottomTabSelected(it)) }
-            )
         },
         containerColor = MaterialTheme.colorScheme.background
     ) { paddingValues ->

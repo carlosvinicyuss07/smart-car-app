@@ -32,24 +32,22 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.SpanStyle
-import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import com.glc.smartcar.R
 import com.glc.smartcar.ui.components.buttons.PrimaryButtonComponent
 import com.glc.smartcar.ui.components.inputs.AuthInputComponent
+import com.glc.smartcar.ui.navigation.AppRoute
 import com.glc.smartcar.ui.theme.SmartCarTheme
 import kotlinx.coroutines.flow.collectLatest
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun AuthScreen(
+    navController: androidx.navigation.NavController,
     viewModel: AuthViewModel = koinViewModel()
 ) {
 
@@ -60,11 +58,9 @@ fun AuthScreen(
         viewModel.sideEffects.collectLatest { effect ->
             when (effect) {
                 is AuthUiSideEffect.NavigateToHome -> {
-                    // Navegar para a tela principal
-
-                    // navController.navigate("home_route") {
-                    //     popUpTo("auth_route") { inclusive = true } // Limpa a pilha para não voltar pro login
-                    // }
+                    navController.navigate(AppRoute.MainGraph) {
+                        popUpTo(AppRoute.AuthGraph) { inclusive = true }
+                    }
                 }
                 is AuthUiSideEffect.ShowSnackbar -> {
                     Toast.makeText(context, effect.message, Toast.LENGTH_SHORT).show()

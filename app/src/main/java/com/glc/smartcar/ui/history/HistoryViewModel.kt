@@ -5,7 +5,6 @@ import androidx.lifecycle.viewModelScope
 import com.glc.smartcar.core.Result
 import com.glc.smartcar.data.model.avaliacao.AvaliacaoResponse
 import com.glc.smartcar.data.repository.AvaliacaoRepositoryInterface
-import com.glc.smartcar.ui.components.navigation.BottomNavItem
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -45,19 +44,6 @@ class HistoryViewModel(
             is HistoryUiEvent.OnAvaliacaoClick -> {
                 viewModelScope.launch {
                     _sideEffects.send(HistoryUiSideEffect.NavigateToDetails(event.id))
-                }
-            }
-            is HistoryUiEvent.OnBottomTabSelected -> {
-                viewModelScope.launch {
-                    when (event.tab) {
-                        BottomNavItem.HISTORY -> {}
-                        BottomNavItem.NEW_EVALUATION -> {
-                            _sideEffects.send(HistoryUiSideEffect.NavigateToNewEvaluation)
-                        }
-                        BottomNavItem.PROFILE -> {
-                            _sideEffects.send(HistoryUiSideEffect.NavigateToProfile)
-                        }
-                    }
                 }
             }
         }

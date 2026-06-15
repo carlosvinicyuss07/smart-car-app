@@ -65,6 +65,7 @@ kotlin {
 
 dependencies {
 
+    implementation(libs.androidx.navigation.compose)
     implementation(libs.retrofit)
     implementation(libs.okhttp)
     implementation(libs.logging.interceptor)
