@@ -99,7 +99,19 @@ class AuthViewModel(
 
             when (result) {
                 is Result.Success<*> -> {
-                    _sideEffects.send(AuthUiSideEffect.NavigateToHome)
+                    if (state.isLoginMode) {
+                        _sideEffects.send(AuthUiSideEffect.NavigateToHome)
+                    } else {
+                        _uiState.update {
+                            it.copy(
+                                isLoginMode = true,
+                                nome = "",
+                                confirmarSenha = "",
+                                formErrors = AuthFormErrors()
+                            )
+                        }
+                        _sideEffects.send(AuthUiSideEffect.ShowSnackbar("Cadastro realizado com sucesso!"))
+                    }
                 }
 
                 is Result.Error -> {
