@@ -11,6 +11,7 @@ import com.glc.smartcar.data.repository.impl.AvaliacaoRepository
 import com.glc.smartcar.data.repository.impl.FipeRepository
 import com.glc.smartcar.ui.auth.AuthViewModel
 import com.glc.smartcar.ui.history.HistoryViewModel
+import com.glc.smartcar.ui.newevaluation.NewEvaluationViewModel
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import kotlinx.serialization.json.Json
 import okhttp3.Interceptor
@@ -97,4 +98,5 @@ val viewModelModule = module {
 
     viewModelOf(::AuthViewModel)
     viewModelOf(::HistoryViewModel)
+    viewModelOf(::NewEvaluationViewModel)
 }

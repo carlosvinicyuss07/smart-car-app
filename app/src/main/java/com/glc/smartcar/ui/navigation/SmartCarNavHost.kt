@@ -17,6 +17,8 @@ import com.glc.smartcar.ui.history.HistoryScreen
 import com.glc.smartcar.ui.newevaluation.NewEvaluationScreen
 import com.glc.smartcar.ui.profile.ProfileScreen
 
+import com.glc.smartcar.ui.evaluationdetails.EvaluationDetailsScreen
+
 @Composable
 fun SmartCarNavHost(startDestination: Any) {
     val navController = rememberNavController()
@@ -61,11 +63,19 @@ fun SmartCarNavHost(startDestination: Any) {
                 }
                 
                 composable<AppRoute.NewEvaluation> {
-                    NewEvaluationScreen()
+                    NewEvaluationScreen(
+                        onNavigateToDetails = {
+                            navController.navigate(AppRoute.EvaluationDetails)
+                        }
+                    )
                 }
                 
                 composable<AppRoute.Profile> {
                     ProfileScreen()
+                }
+
+                composable<AppRoute.EvaluationDetails> {
+                    EvaluationDetailsScreen()
                 }
             }
         }

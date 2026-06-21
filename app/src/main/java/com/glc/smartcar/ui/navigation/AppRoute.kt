@@ -21,4 +21,7 @@ sealed class AppRoute {
 
     @Serializable
     data object Profile
+
+    @Serializable
+    data object EvaluationDetails
 }
