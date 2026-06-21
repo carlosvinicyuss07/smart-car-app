@@ -15,6 +15,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.DirectionsCar
 import androidx.compose.material.icons.outlined.KeyboardArrowDown
@@ -45,6 +46,7 @@ fun OutlinedInputWithIconComponent(
     modifier: Modifier = Modifier,
     trailingIcon: ImageVector? = null,
     isDropdown: Boolean = false,
+    keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
     onClick: (() -> Unit)? = null
 ) {
     Column(modifier = modifier.fillMaxWidth()) {
@@ -102,6 +104,7 @@ fun OutlinedInputWithIconComponent(
                     BasicTextField(
                         value = value,
                         onValueChange = onValueChange,
+                        keyboardOptions = keyboardOptions,
                         singleLine = true,
                         textStyle = MaterialTheme.typography.bodyMedium.copy(
                             fontSize = 16.sp,

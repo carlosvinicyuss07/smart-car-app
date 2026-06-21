@@ -33,6 +33,7 @@ fun ExtendedButtonWithIconComponent(
     icon: ImageVector,
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
+    enabled: Boolean = true,
     containerColor: Color = MaterialTheme.colorScheme.primary,
     contentColor: Color = MaterialTheme.colorScheme.onPrimary
 ) {
@@ -42,6 +43,7 @@ fun ExtendedButtonWithIconComponent(
         modifier = modifier
             .width(342.dp)
             .height(64.dp),
+        enabled = enabled,
         colors = ButtonDefaults.buttonColors(
             containerColor = containerColor,
             contentColor = contentColor
