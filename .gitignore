@@ -15,3 +15,6 @@
 local.properties
 .agents
 .kotlin
+adb
+DOCUMENTATION.md
+.idea
