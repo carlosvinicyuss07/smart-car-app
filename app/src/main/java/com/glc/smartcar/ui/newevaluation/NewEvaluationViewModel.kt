@@ -70,7 +70,17 @@ class NewEvaluationViewModel(
                 updateState { it.copy(additionalNotes = event.notes) }
             }
             is NewEvaluationUiEvent.OnPriceChanged -> {
-                updateState { it.copy(price = event.price) }
+                val cleanString = event.price.replace(Regex("[^0-9]"), "")
+                if (cleanString.isEmpty()) {
+                    updateState { it.copy(price = "") }
+                } else {
+                    val parsed = cleanString.toDoubleOrNull() ?: 0.0
+                    val formatter = java.text.NumberFormat.getNumberInstance(java.util.Locale.Builder().setLanguage("pt").setRegion("BR").build())
+                    formatter.minimumFractionDigits = 2
+                    formatter.maximumFractionDigits = 2
+                    val formatted = formatter.format(parsed / 100)
+                    updateState { it.copy(price = formatted) }
+                }
             }
             is NewEvaluationUiEvent.OnCalculateClick -> {
                 submitEvaluation()
@@ -94,17 +104,6 @@ class NewEvaluationViewModel(
                 state.mileage.isNotBlank() &&
                 state.condition.isNotBlank() &&
                 priceNotZero
-    }
-
-    private fun formatCurrency(input: String): String {
-        // Remove tudo que não for número
-        val cleanString = input.replace(Regex("[^0-9]"), "")
-        if (cleanString.isEmpty()) return "0,00"
-
-        // Converte para Double dividindo por 100 para aplicar as casas decimais corretamente
-        val parsed = cleanString.toDoubleOrNull() ?: 0.0
-        val formatter = NumberFormat.getCurrencyInstance(Locale("pt", "BR"))
-        return formatter.format(parsed / 100)
     }
 
     private fun loadBrands() {
@@ -168,7 +167,7 @@ class NewEvaluationViewModel(
                 modelId = state.selectedModel?.code!!,
                 yearId = state.selectedYear?.code!!,
                 kmsRodados = state.mileage.toDoubleOrNull() ?: 0.0,
-                conservacao = state.condition,
+                conservacao = state.condition.uppercase(),
                 precoDesejado = priceDouble,
                 notasPessoais = state.additionalNotes
             )

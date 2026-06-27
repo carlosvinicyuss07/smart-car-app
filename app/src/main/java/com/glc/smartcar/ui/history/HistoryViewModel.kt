@@ -78,20 +78,15 @@ class HistoryViewModel(
     private fun filterAvaliacoes(list: List<AvaliacaoResponse>, query: String): List<AvaliacaoResponse> {
         if (query.isBlank()) return list
         return list.filter { item ->
+            val carName = if (item.veiculo != null) {
+                "${item.veiculo.marca} ${item.veiculo.modelo} ${item.veiculo.ano}"
+            } else {
+                item.fipeId
+            }
             item.fipeId.contains(query, ignoreCase = true) ||
             item.statusResultado.contains(query, ignoreCase = true) ||
             item.notasPessoais.contains(query, ignoreCase = true) ||
-            getCarNameFallback(item.fipeId).contains(query, ignoreCase = true)
-        }
-    }
-
-    private fun getCarNameFallback(fipeId: String): String {
-        return when (fipeId) {
-            "001234-5" -> "Toyota Corolla XEi 2.0"
-            "002345-6" -> "Honda Civic Touring 1.5"
-            "003456-7" -> "Volkswagen T-Cross Highline"
-            "004567-8" -> "Jeep Compass Longitude"
-            else -> ""
+            carName.contains(query, ignoreCase = true)
         }
     }
 }

@@ -15,6 +15,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.DirectionsCar
 import androidx.compose.material.icons.outlined.Refresh
@@ -27,6 +28,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import androidx.compose.material3.pulltorefresh.rememberPullToRefreshState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -48,6 +50,8 @@ import kotlinx.coroutines.flow.collectLatest
 import org.koin.androidx.compose.koinViewModel
 import java.text.NumberFormat
 import java.util.Locale
+
+import androidx.compose.ui.input.nestedscroll.nestedScroll
 
 @Composable
 fun HistoryScreen(
@@ -81,6 +85,7 @@ fun HistoryScreen(
     )
 }
 
+@OptIn(androidx.compose.material3.ExperimentalMaterial3Api::class)
 @Composable
 fun HistoryScreenContent(
     state: HistoryUiState,
@@ -111,21 +116,19 @@ fun HistoryScreenContent(
         },
         containerColor = MaterialTheme.colorScheme.background
     ) { paddingValues ->
-        Box(
+        androidx.compose.material3.pulltorefresh.PullToRefreshBox(
+            isRefreshing = state.isLoading,
+            onRefresh = { onEvent(HistoryUiEvent.OnCarregarAvaliacoes) },
             modifier = Modifier
                 .fillMaxSize()
                 .padding(paddingValues)
         ) {
-            if (state.isLoading) {
-                CircularProgressIndicator(
-                    modifier = Modifier.align(Alignment.Center),
-                    color = MaterialTheme.colorScheme.primary
-                )
-            } else if (state.error != null) {
+            if (state.error != null) {
                 Column(
                     modifier = Modifier
                         .fillMaxSize()
-                        .padding(24.dp),
+                        .padding(24.dp)
+                        .verticalScroll(androidx.compose.foundation.rememberScrollState()),
                     horizontalAlignment = Alignment.CenterHorizontally,
                     verticalArrangement = Arrangement.Center
                 ) {
@@ -153,11 +156,12 @@ fun HistoryScreenContent(
                         Text(text = "Tentar novamente")
                     }
                 }
-            } else if (state.filteredAvaliacoes.isEmpty()) {
+            } else if (!state.isLoading && state.filteredAvaliacoes.isEmpty()) {
                 Column(
                     modifier = Modifier
                         .fillMaxSize()
-                        .padding(24.dp),
+                        .padding(24.dp)
+                        .verticalScroll(androidx.compose.foundation.rememberScrollState()),
                     horizontalAlignment = Alignment.CenterHorizontally,
                     verticalArrangement = Arrangement.Center
                 ) {
@@ -189,7 +193,11 @@ fun HistoryScreenContent(
                     contentPadding = PaddingValues(horizontal = 24.dp, vertical = 8.dp)
                 ) {
                     items(state.filteredAvaliacoes, key = { it.id }) { avaliacao ->
-                        val carName = getCarName(avaliacao.fipeId)
+                        val carName = if (avaliacao.veiculo != null) {
+                            "${avaliacao.veiculo.marca} ${avaliacao.veiculo.modelo} (${avaliacao.veiculo.ano})"
+                        } else {
+                            avaliacao.fipeId
+                        }
                         val priceStr = formatCurrency(avaliacao.precoDesejado)
                         val dateStr = formatDate(avaliacao.criadoA)
                         val statusEnum = mapStatus(avaliacao.statusResultado)
@@ -210,21 +218,10 @@ fun HistoryScreenContent(
     }
 }
 
-private fun getCarName(fipeId: String): String {
-    return when (fipeId) {
-        "001234-5" -> "Toyota Corolla XEi 2.0 (2022)"
-        "002345-6" -> "Honda Civic Touring 1.5 Turbo (2021)"
-        "003456-7" -> "Volkswagen T-Cross Highline (2023)"
-        "004567-8" -> "Jeep Compass Longitude 1.3T (2022)"
-        "005678-9" -> "Fiat Pulse Impetus Turbo 200 (2023)"
-        else -> fipeId
-    }
-}
-
 private fun formatCurrency(value: Double): String {
     return try {
-        val formatter = NumberFormat.getCurrencyInstance(Locale("pt", "BR"))
-        formatter.format(value)
+        val format = NumberFormat.getCurrencyInstance(Locale.Builder().setLanguage("pt").setRegion("BR").build())
+        format.format(value)
     } catch (e: Exception) {
         "R$ $value"
     }
@@ -271,7 +268,6 @@ private fun HistoryScreenPreview() {
     val mockAvaliacoes = listOf(
         AvaliacaoResponse(
             id = 1L,
-            usuarioId = 1L,
             fipeId = "001234-5",
             precoDesejado = 138500.0,
             precoFipe = 142000.0,
@@ -283,7 +279,6 @@ private fun HistoryScreenPreview() {
         ),
         AvaliacaoResponse(
             id = 2L,
-            usuarioId = 1L,
             fipeId = "002345-6",
             precoDesejado = 152000.0,
             precoFipe = 145000.0,
@@ -295,7 +290,6 @@ private fun HistoryScreenPreview() {
         ),
         AvaliacaoResponse(
             id = 3L,
-            usuarioId = 1L,
             fipeId = "003456-7",
             precoDesejado = 165900.0,
             precoFipe = 165000.0,

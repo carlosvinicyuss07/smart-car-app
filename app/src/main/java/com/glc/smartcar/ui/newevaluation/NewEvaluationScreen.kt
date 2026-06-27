@@ -88,7 +88,7 @@ fun NewEvaluationContent(
     var yearMenuExpanded by remember { mutableStateOf(false) }
     var conditionMenuExpanded by remember { mutableStateOf(false) }
 
-    val conditions = listOf("Excelente", "Bom", "Na Média", "Ruim", "Péssimo")
+    val conditions = listOf("Novo", "Bom", "Regular", "Ruim")
 
     Scaffold(
         topBar = {

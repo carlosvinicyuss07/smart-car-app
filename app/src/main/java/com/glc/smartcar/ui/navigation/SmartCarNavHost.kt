@@ -43,7 +43,7 @@ fun SmartCarNavHost(startDestination: Any) {
         NavHost(
             navController = navController,
             startDestination = startDestination,
-            modifier = Modifier.padding(innerPadding)
+            modifier = Modifier.padding(top = innerPadding.calculateTopPadding())
         ) {
             // Auth Graph
             navigation<AppRoute.AuthGraph>(
