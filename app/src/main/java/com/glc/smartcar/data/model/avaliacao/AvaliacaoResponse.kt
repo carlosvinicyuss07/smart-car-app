@@ -10,6 +10,7 @@ data class AvaliacaoResponse(
     val veiculo: VeiculoObject? = null,
     val precoDesejado: Double,
     val precoFipe: Double,
+    val variacao: Double,
     val statusResultado: String,
     @SerialName("criado_a") val criadoA: String,
     val conservacao: String,
