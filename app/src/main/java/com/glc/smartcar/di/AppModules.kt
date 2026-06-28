@@ -6,9 +6,11 @@ import com.glc.smartcar.data.repository.AuthRepositoryInterface
 import com.glc.smartcar.data.repository.AvaliacaoRepositoryInterface
 import com.glc.smartcar.data.repository.FipeRepositoryInterface
 import com.glc.smartcar.data.local.TokenManager
+import com.glc.smartcar.data.repository.UsuarioRepositoryInterface
 import com.glc.smartcar.data.repository.impl.AuthRepository
 import com.glc.smartcar.data.repository.impl.AvaliacaoRepository
 import com.glc.smartcar.data.repository.impl.FipeRepository
+import com.glc.smartcar.data.repository.impl.UsuarioRepository
 import com.glc.smartcar.ui.auth.AuthViewModel
 import com.glc.smartcar.ui.history.HistoryViewModel
 import com.glc.smartcar.ui.newevaluation.NewEvaluationViewModel
@@ -91,6 +93,13 @@ val repositoryModule = module {
     single<FipeRepositoryInterface> {
         FipeRepository(
             apiService = get()
+        )
+    }
+
+    single<UsuarioRepositoryInterface> {
+        UsuarioRepository(
+            apiService = get(),
+            tokenManager = get()
         )
     }
 }
