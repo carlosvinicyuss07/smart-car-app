@@ -62,6 +62,7 @@ fun HistoryScreen(
     val context = LocalContext.current
 
     LaunchedEffect(Unit) {
+        viewModel.onEvent(HistoryUiEvent.OnCarregarAvaliacoes)
         viewModel.sideEffects.collectLatest { effect ->
             when (effect) {
                 is HistoryUiSideEffect.ShowToast -> {

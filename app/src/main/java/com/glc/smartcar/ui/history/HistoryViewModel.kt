@@ -23,9 +23,7 @@ class HistoryViewModel(
     private val _sideEffects = Channel<HistoryUiSideEffect>()
     val sideEffects = _sideEffects.receiveAsFlow()
 
-    init {
-        carregarAvaliacoes()
-    }
+
 
     fun onEvent(event: HistoryUiEvent) {
         when (event) {
