@@ -47,7 +47,7 @@ android {
             applicationIdSuffix = ".dev"
             versionNameSuffix = "-DEV"
 
-            buildConfigField("String", "BASE_URL", "\"http://10.0.2.2:8080/\"")
+            buildConfigField("String", "BASE_URL", "\"http://localhost:8080/\"")
         }
         create("prod") {
             dimension = "environment"
@@ -65,6 +65,7 @@ kotlin {
 
 dependencies {
 
+    implementation(libs.androidx.navigation.compose)
     implementation(libs.retrofit)
     implementation(libs.okhttp)
     implementation(libs.logging.interceptor)

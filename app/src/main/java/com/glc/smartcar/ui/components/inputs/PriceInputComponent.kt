@@ -82,7 +82,7 @@ fun PriceInputComponent(
             Box(modifier = Modifier.weight(1f)) {
                 if (value.isEmpty()) {
                     Text(
-                        text = "115.000,00",
+                        text = "0,00",
                         style = MaterialTheme.typography.titleMedium.copy(fontSize = 18.sp),
                         color = MaterialTheme.colorScheme.outlineVariant
                     )

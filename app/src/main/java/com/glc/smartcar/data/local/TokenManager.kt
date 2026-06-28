@@ -1,4 +1,4 @@
-package com.glc.smartcar.data.repository
+package com.glc.smartcar.data.local
 
 import android.content.Context
 import android.content.SharedPreferences

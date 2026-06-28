@@ -4,7 +4,7 @@ import com.glc.smartcar.data.api.ApiService
 import com.glc.smartcar.data.model.avaliacao.AvaliacaoRequest
 import com.glc.smartcar.data.model.avaliacao.AvaliacaoResponse
 import com.glc.smartcar.data.repository.AvaliacaoRepositoryInterface
-import com.glc.smartcar.data.repository.Result
+import com.glc.smartcar.core.Result
 
 class AvaliacaoRepository(
     private val apiService: ApiService
@@ -17,6 +17,24 @@ class AvaliacaoRepository(
                 Result.Success(response.body()!!)
             } else {
                 Result.Error("Erro ao buscar histórico de avaliações.", response.code())
+            }
+        } catch (e: Exception) {
+            Result.Error("Falha na conexão: ${e.localizedMessage}")
+        }
+    }
+
+    override suspend fun buscarAvaliacao(id: Long): Result<AvaliacaoResponse> {
+        return try {
+            val response = apiService.buscarAvaliacao(id)
+            if (response.isSuccessful && response.body() != null) {
+                Result.Success(response.body()!!)
+            } else {
+                val msg = when (response.code()) {
+                    403 -> "Você não tem permissão para acessar esta avaliação."
+                    404 -> "Avaliação não encontrada."
+                    else -> "Erro ao buscar avaliação."
+                }
+                Result.Error(msg, response.code())
             }
         } catch (e: Exception) {
             Result.Error("Falha na conexão: ${e.localizedMessage}")

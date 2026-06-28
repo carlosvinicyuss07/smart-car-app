@@ -29,6 +29,9 @@ interface ApiService {
     @GET("sc")
     suspend fun listarAvaliacoes(): Response<List<AvaliacaoResponse>>
 
+    @GET("sc/{id}")
+    suspend fun buscarAvaliacao(@Path("id") id: Long): Response<AvaliacaoResponse>
+
     @PATCH("sc/{id}")
     suspend fun desativarAvaliacao(@Path("id") id: Long): Response<AvaliacaoResponse>
 

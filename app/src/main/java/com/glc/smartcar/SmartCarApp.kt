@@ -3,6 +3,7 @@ package com.glc.smartcar
 import android.app.Application
 import com.glc.smartcar.di.networkModule
 import com.glc.smartcar.di.repositoryModule
+import com.glc.smartcar.di.viewModelModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.startKoin
@@ -14,7 +15,7 @@ class SmartCarApp : Application() {
         startKoin {
             androidLogger()
             androidContext(this@SmartCarApp)
-            modules(networkModule, repositoryModule)
+            modules(networkModule, repositoryModule, viewModelModule)
         }
     }
 }

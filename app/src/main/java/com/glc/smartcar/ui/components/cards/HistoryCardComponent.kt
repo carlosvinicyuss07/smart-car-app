@@ -41,26 +41,29 @@ import androidx.compose.ui.unit.sp
 import com.glc.smartcar.ui.theme.SmartCarTheme
 
 enum class EvaluationStatus(val label: String) {
-    GOOD_DEAL("Bom negócio"),
-    ABOVE_FIPE("Acima da FIPE"),
-    FAIR_PRICE("Preço Justo")
+    EXCELLENT_DEAL("Ótimo negócio"),
+    BAD_DEAL("Péssimo negócio"),
+    AVERAGE("Na média"),
+    ABOVE_FIPE("Acima da FIPE")
 }
 
 @Composable
 private fun getStatusColors(status: EvaluationStatus): Pair<Color, Color> {
     return when (status) {
-        EvaluationStatus.GOOD_DEAL -> Pair(Color(0xFFE8F5E9), Color(0xFF2E7D32)) // Light Green BG, Dark Green Text
-        EvaluationStatus.ABOVE_FIPE -> Pair(Color(0xFFFFEBEE), Color(0xFFC62828)) // Light Red BG, Dark Red Text
-        EvaluationStatus.FAIR_PRICE -> Pair(Color(0xFFFFF8E1), Color(0xFFF9A825)) // Light Yellow BG, Dark Yellow Text
+        EvaluationStatus.EXCELLENT_DEAL -> Pair(Color(0xFFE8F5E9), Color(0xFF2E7D32)) // Light Green, Dark Green
+        EvaluationStatus.BAD_DEAL -> Pair(Color(0xFFFFEBEE), Color(0xFFC62828)) // Light Red, Dark Red
+        EvaluationStatus.AVERAGE -> Pair(Color(0xFFE3F2FD), Color(0xFF1565C0)) // Light Blue, Dark Blue
+        EvaluationStatus.ABOVE_FIPE -> Pair(Color(0xFFFFF8E1), Color(0xFFF9A825)) // Light Yellow, Dark Yellow
     }
 }
 
 @Composable
 private fun getStatusIcon(status: EvaluationStatus): ImageVector {
     return when (status) {
-        EvaluationStatus.GOOD_DEAL -> Icons.Outlined.CheckCircle
+        EvaluationStatus.EXCELLENT_DEAL -> Icons.Outlined.CheckCircle
+        EvaluationStatus.BAD_DEAL -> Icons.Outlined.Info
+        EvaluationStatus.AVERAGE -> Icons.Outlined.Circle
         EvaluationStatus.ABOVE_FIPE -> Icons.Outlined.Info
-        EvaluationStatus.FAIR_PRICE -> Icons.Outlined.Circle
     }
 }
 
@@ -208,15 +211,15 @@ private fun HistoryCardComponentPreview() {
                 HistoryCardComponent(
                     carModel = "Toyota Corolla XEi 2.0 (2022)",
                     price = "R$ 138.500",
-                    date = "Oct 24, 2023",
-                    status = EvaluationStatus.GOOD_DEAL
+                    date = "24-10-2023",
+                    status = EvaluationStatus.EXCELLENT_DEAL
                 )
                 Spacer(modifier = Modifier.height(16.dp))
                 HistoryCardComponent(
                     carModel = "Honda Civic Touring 1.5 Turbo (2021)",
                     price = "R$ 152.000",
-                    date = "Oct 22, 2023",
-                    status = EvaluationStatus.ABOVE_FIPE
+                    date = "24-10-2023",
+                    status = EvaluationStatus.BAD_DEAL
                 )
             }
         }

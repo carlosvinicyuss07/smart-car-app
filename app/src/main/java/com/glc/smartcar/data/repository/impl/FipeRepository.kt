@@ -4,7 +4,7 @@ import com.glc.smartcar.data.api.ApiService
 import com.glc.smartcar.data.model.fipe.FipeDetailResponse
 import com.glc.smartcar.data.model.fipe.FipeItemResponse
 import com.glc.smartcar.data.repository.FipeRepositoryInterface
-import com.glc.smartcar.data.repository.Result
+import com.glc.smartcar.core.Result
 
 class FipeRepository(
     private val apiService: ApiService
