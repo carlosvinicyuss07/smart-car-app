@@ -89,7 +89,7 @@ fun AuthScreenContent(
         verticalArrangement = Arrangement.Top
     ) {
         Image(
-            painter = painterResource(id = R.mipmap.ic_launcher_foreground),
+            painter = painterResource(id = R.drawable.logo),
             contentDescription = "SmartCar Logo",
             modifier = Modifier.size(200.dp)
         )
