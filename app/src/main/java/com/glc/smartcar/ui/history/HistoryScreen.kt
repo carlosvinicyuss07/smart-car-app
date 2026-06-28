@@ -55,7 +55,8 @@ import androidx.compose.ui.input.nestedscroll.nestedScroll
 
 @Composable
 fun HistoryScreen(
-    viewModel: HistoryViewModel = koinViewModel()
+    viewModel: HistoryViewModel = koinViewModel(),
+    onNavigateToDetails: (Long) -> Unit
 ) {
     val state by viewModel.uiState.collectAsState()
     val context = LocalContext.current
@@ -67,7 +68,7 @@ fun HistoryScreen(
                     Toast.makeText(context, effect.message, Toast.LENGTH_SHORT).show()
                 }
                 is HistoryUiSideEffect.NavigateToDetails -> {
-                    Toast.makeText(context, "Detalhes da avaliação: ${effect.id}", Toast.LENGTH_SHORT).show()
+                    onNavigateToDetails(effect.id)
                 }
                 HistoryUiSideEffect.NavigateToNewEvaluation -> {
                     Toast.makeText(context, "Abrir Nova Avaliação", Toast.LENGTH_SHORT).show()
@@ -271,6 +272,7 @@ private fun HistoryScreenPreview() {
             fipeId = "001234-5",
             precoDesejado = 138500.0,
             precoFipe = 142000.0,
+            variacao = -2.46,
             statusResultado = "BOM_NEGOCIO",
             criadoA = "24-10-2023",
             conservacao = "Excelente",
@@ -282,6 +284,7 @@ private fun HistoryScreenPreview() {
             fipeId = "002345-6",
             precoDesejado = 152000.0,
             precoFipe = 145000.0,
+            variacao = 4.82,
             statusResultado = "PESSIMO_NEGOCIO",
             criadoA = "24-10-2023",
             conservacao = "Bom",
@@ -293,6 +296,7 @@ private fun HistoryScreenPreview() {
             fipeId = "003456-7",
             precoDesejado = 165900.0,
             precoFipe = 165000.0,
+            variacao = 0.54,
             statusResultado = "NA_MEDIA",
             criadoA = "19-10-2023",
             conservacao = "Excelente",

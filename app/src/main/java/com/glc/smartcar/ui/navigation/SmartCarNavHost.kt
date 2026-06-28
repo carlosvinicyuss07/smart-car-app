@@ -17,7 +17,10 @@ import com.glc.smartcar.ui.history.HistoryScreen
 import com.glc.smartcar.ui.newevaluation.NewEvaluationScreen
 import com.glc.smartcar.ui.profile.ProfileScreen
 
+import androidx.navigation.toRoute
 import com.glc.smartcar.ui.evaluationdetails.EvaluationDetailsScreen
+import com.glc.smartcar.ui.evaluationdetails.EvaluationDetailsViewModel
+import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun SmartCarNavHost(startDestination: Any) {
@@ -59,13 +62,17 @@ fun SmartCarNavHost(startDestination: Any) {
                 startDestination = AppRoute.History
             ) {
                 composable<AppRoute.History> {
-                    HistoryScreen()
+                    HistoryScreen(
+                        onNavigateToDetails = { id ->
+                            navController.navigate(AppRoute.EvaluationDetails(avaliacaoId = id))
+                        }
+                    )
                 }
                 
                 composable<AppRoute.NewEvaluation> {
                     NewEvaluationScreen(
-                        onNavigateToDetails = {
-                            navController.navigate(AppRoute.EvaluationDetails)
+                        onNavigateToDetails = { id ->
+                            navController.navigate(AppRoute.EvaluationDetails(avaliacaoId = id))
                         }
                     )
                 }
@@ -75,7 +82,11 @@ fun SmartCarNavHost(startDestination: Any) {
                 }
 
                 composable<AppRoute.EvaluationDetails> {
-                    EvaluationDetailsScreen()
+                    val viewModel: EvaluationDetailsViewModel = koinViewModel()
+                    EvaluationDetailsScreen(
+                        viewModel = viewModel,
+                        onNavigateBack = { navController.popBackStack() }
+                    )
                 }
             }
         }

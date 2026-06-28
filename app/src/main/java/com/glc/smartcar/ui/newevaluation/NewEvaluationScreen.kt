@@ -52,7 +52,7 @@ import org.koin.androidx.compose.koinViewModel
 @Composable
 fun NewEvaluationScreen(
     viewModel: NewEvaluationViewModel = koinViewModel(),
-    onNavigateToDetails: () -> Unit = {}
+    onNavigateToDetails: (Long) -> Unit
 ) {
     val state by viewModel.uiState.collectAsState()
     val context = LocalContext.current
@@ -63,8 +63,8 @@ fun NewEvaluationScreen(
                 is NewEvaluationUiSideEffect.ShowToast -> {
                     Toast.makeText(context, effect.message, Toast.LENGTH_SHORT).show()
                 }
-                NewEvaluationUiSideEffect.NavigateToDetails -> {
-                    onNavigateToDetails()
+                is NewEvaluationUiSideEffect.NavigateToDetails -> {
+                    onNavigateToDetails(effect.avaliacaoId)
                 }
             }
         }

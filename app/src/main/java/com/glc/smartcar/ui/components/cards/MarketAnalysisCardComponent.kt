@@ -50,6 +50,8 @@ fun MarketAnalysisCardComponent(
     priceDifference: String,
     priceDifferenceColor: Color,
     fipePrice: String,
+    variation: String? = null,
+    variationColor: Color? = null,
     evaluationDate: String,
     thermometerPosition: Float, // 0f to 1f
     modifier: Modifier = Modifier
@@ -118,6 +120,14 @@ fun MarketAnalysisCardComponent(
             
             // Info Rows
             InfoRow(label = "Mercado (FIPE)", value = fipePrice)
+            if (variation != null) {
+                Spacer(modifier = Modifier.height(16.dp))
+                InfoRow(
+                    label = "Variação",
+                    value = variation,
+                    valueColor = variationColor ?: MaterialTheme.colorScheme.onBackground
+                )
+            }
             Spacer(modifier = Modifier.height(16.dp))
             InfoRow(label = "Avaliado em", value = evaluationDate)
             

@@ -23,5 +23,5 @@ sealed class AppRoute {
     data object Profile
 
     @Serializable
-    data object EvaluationDetails
+    data class EvaluationDetails(val avaliacaoId: Long)
 }
