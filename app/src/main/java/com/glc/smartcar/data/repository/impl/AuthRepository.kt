@@ -4,8 +4,8 @@ import com.glc.smartcar.data.api.ApiService
 import com.glc.smartcar.data.model.auth.CadastroRequest
 import com.glc.smartcar.data.model.auth.LoginRequest
 import com.glc.smartcar.data.repository.AuthRepositoryInterface
-import com.glc.smartcar.data.repository.Result
-import com.glc.smartcar.data.repository.TokenManager
+import com.glc.smartcar.core.Result
+import com.glc.smartcar.data.local.TokenManager
 
 class AuthRepository(
     private val apiService: ApiService,
@@ -54,6 +54,15 @@ class AuthRepository(
             }
         } catch (e: Exception) {
             Result.Error("Falha na conexão: ${e.localizedMessage}")
+        }
+    }
+
+    override suspend fun logout(): Result<Unit> {
+        return try {
+            tokenManager.limparToken()
+            Result.Success(Unit)
+        } catch (e: Exception) {
+            Result.Error("Falha ao fazer logout: ${e.localizedMessage}")
         }
     }
 }

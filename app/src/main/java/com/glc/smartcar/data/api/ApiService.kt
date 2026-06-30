@@ -8,8 +8,10 @@ import com.glc.smartcar.data.model.avaliacao.AvaliacaoRequest
 import com.glc.smartcar.data.model.avaliacao.AvaliacaoResponse
 import com.glc.smartcar.data.model.fipe.FipeDetailResponse
 import com.glc.smartcar.data.model.fipe.FipeItemResponse
+import com.glc.smartcar.data.model.usuario.UsuarioPerfilResponse
 import retrofit2.Response
 import retrofit2.http.Body
+import retrofit2.http.DELETE
 import retrofit2.http.GET
 import retrofit2.http.PATCH
 import retrofit2.http.POST
@@ -23,11 +25,20 @@ interface ApiService {
     @POST("auth/login")
     suspend fun fazerLogin(@Body request: LoginRequest): Response<LoginResponse>
 
+    @GET("usuario/perfil")
+    suspend fun obterPerfilUsuario(): Response<UsuarioPerfilResponse>
+
+    @DELETE("usuario")
+    suspend fun deletarUsuario(): Response<Unit>
+
     @POST("sc")
     suspend fun criarAvaliacao(@Body request: AvaliacaoRequest): Response<AvaliacaoResponse>
 
     @GET("sc")
     suspend fun listarAvaliacoes(): Response<List<AvaliacaoResponse>>
+
+    @GET("sc/{id}")
+    suspend fun buscarAvaliacao(@Path("id") id: Long): Response<AvaliacaoResponse>
 
     @PATCH("sc/{id}")
     suspend fun desativarAvaliacao(@Path("id") id: Long): Response<AvaliacaoResponse>

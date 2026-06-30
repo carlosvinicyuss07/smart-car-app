@@ -1,4 +1,4 @@
-package com.glc.smartcar.data.repository
+package com.glc.smartcar.core
 
 sealed class Result<out T> {
     data class Success<out T>(val data: T) : Result<T>()
