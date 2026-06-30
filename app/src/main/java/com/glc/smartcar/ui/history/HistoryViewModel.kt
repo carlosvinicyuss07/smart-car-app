@@ -23,8 +23,6 @@ class HistoryViewModel(
     private val _sideEffects = Channel<HistoryUiSideEffect>()
     val sideEffects = _sideEffects.receiveAsFlow()
 
-
-
     fun onEvent(event: HistoryUiEvent) {
         when (event) {
             is HistoryUiEvent.OnSearchQueryChanged -> {

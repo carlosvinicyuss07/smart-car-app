@@ -6,13 +6,16 @@ import com.glc.smartcar.data.repository.AuthRepositoryInterface
 import com.glc.smartcar.data.repository.AvaliacaoRepositoryInterface
 import com.glc.smartcar.data.repository.FipeRepositoryInterface
 import com.glc.smartcar.data.local.TokenManager
+import com.glc.smartcar.data.repository.UsuarioRepositoryInterface
 import com.glc.smartcar.data.repository.impl.AuthRepository
 import com.glc.smartcar.data.repository.impl.AvaliacaoRepository
 import com.glc.smartcar.data.repository.impl.FipeRepository
+import com.glc.smartcar.data.repository.impl.UsuarioRepository
 import com.glc.smartcar.ui.auth.AuthViewModel
 import com.glc.smartcar.ui.history.HistoryViewModel
 import com.glc.smartcar.ui.newevaluation.NewEvaluationViewModel
 import com.glc.smartcar.ui.evaluationdetails.EvaluationDetailsViewModel
+import com.glc.smartcar.ui.profile.ProfileViewModel
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import kotlinx.serialization.json.Json
 import okhttp3.Interceptor
@@ -93,6 +96,13 @@ val repositoryModule = module {
             apiService = get()
         )
     }
+
+    single<UsuarioRepositoryInterface> {
+        UsuarioRepository(
+            apiService = get(),
+            tokenManager = get()
+        )
+    }
 }
 
 val viewModelModule = module {
@@ -101,4 +111,5 @@ val viewModelModule = module {
     viewModelOf(::HistoryViewModel)
     viewModelOf(::NewEvaluationViewModel)
     viewModelOf(::EvaluationDetailsViewModel)
+    viewModelOf(::ProfileViewModel)
 }

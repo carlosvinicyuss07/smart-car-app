@@ -43,6 +43,7 @@ import androidx.compose.ui.unit.dp
 import com.glc.smartcar.ui.components.buttons.ExtendedButtonWithIconComponent
 import com.glc.smartcar.ui.components.inputs.OutlinedInputWithIconComponent
 import com.glc.smartcar.ui.components.inputs.PriceInputComponent
+import com.glc.smartcar.ui.components.inputs.FullScreenSelectDialogComponent
 import com.glc.smartcar.ui.components.text.SectionTitleComponent
 import com.glc.smartcar.ui.components.topbar.TopBarComponent
 import com.glc.smartcar.ui.theme.SmartCarTheme
@@ -130,20 +131,18 @@ fun NewEvaluationContent(
                     isDropdown = true,
                     onClick = { if (!state.isLoadingBrands && state.brands.isNotEmpty()) brandMenuExpanded = true }
                 )
-                DropdownMenu(
-                    expanded = brandMenuExpanded,
-                    onDismissRequest = { brandMenuExpanded = false },
-                    modifier = Modifier.fillMaxWidth(0.8f)
-                ) {
-                    state.brands.forEach { brand ->
-                        DropdownMenuItem(
-                            text = { Text(text = brand.name) },
-                            onClick = {
-                                onEvent(NewEvaluationUiEvent.OnBrandSelected(brand))
-                                brandMenuExpanded = false
-                            }
-                        )
-                    }
+                if (brandMenuExpanded) {
+                    FullScreenSelectDialogComponent(
+                        title = "Selecione a marca",
+                        items = state.brands,
+                        itemLabel = { it.name },
+                        onItemSelected = { brand ->
+                            onEvent(NewEvaluationUiEvent.OnBrandSelected(brand))
+                            brandMenuExpanded = false
+                        },
+                        onDismissRequest = { brandMenuExpanded = false },
+                        searchPlaceholder = "Buscar marca..."
+                    )
                 }
             }
             Spacer(modifier = Modifier.height(16.dp))
@@ -159,20 +158,18 @@ fun NewEvaluationContent(
                     isDropdown = true,
                     onClick = { if (!state.isLoadingModels && state.models.isNotEmpty()) modelMenuExpanded = true }
                 )
-                DropdownMenu(
-                    expanded = modelMenuExpanded,
-                    onDismissRequest = { modelMenuExpanded = false },
-                    modifier = Modifier.fillMaxWidth(0.8f)
-                ) {
-                    state.models.forEach { model ->
-                        DropdownMenuItem(
-                            text = { Text(text = model.name) },
-                            onClick = {
-                                onEvent(NewEvaluationUiEvent.OnModelSelected(model))
-                                modelMenuExpanded = false
-                            }
-                        )
-                    }
+                if (modelMenuExpanded) {
+                    FullScreenSelectDialogComponent(
+                        title = "Selecione o modelo",
+                        items = state.models,
+                        itemLabel = { it.name },
+                        onItemSelected = { model ->
+                            onEvent(NewEvaluationUiEvent.OnModelSelected(model))
+                            modelMenuExpanded = false
+                        },
+                        onDismissRequest = { modelMenuExpanded = false },
+                        searchPlaceholder = "Buscar modelo..."
+                    )
                 }
             }
             Spacer(modifier = Modifier.height(16.dp))
@@ -188,20 +185,18 @@ fun NewEvaluationContent(
                     isDropdown = true,
                     onClick = { if (!state.isLoadingYears && state.years.isNotEmpty()) yearMenuExpanded = true }
                 )
-                DropdownMenu(
-                    expanded = yearMenuExpanded,
-                    onDismissRequest = { yearMenuExpanded = false },
-                    modifier = Modifier.fillMaxWidth(0.8f)
-                ) {
-                    state.years.forEach { year ->
-                        DropdownMenuItem(
-                            text = { Text(text = year.name) },
-                            onClick = {
-                                onEvent(NewEvaluationUiEvent.OnYearSelected(year))
-                                yearMenuExpanded = false
-                            }
-                        )
-                    }
+                if (yearMenuExpanded) {
+                    FullScreenSelectDialogComponent(
+                        title = "Selecione o ano",
+                        items = state.years,
+                        itemLabel = { it.name },
+                        onItemSelected = { year ->
+                            onEvent(NewEvaluationUiEvent.OnYearSelected(year))
+                            yearMenuExpanded = false
+                        },
+                        onDismissRequest = { yearMenuExpanded = false },
+                        searchPlaceholder = "Buscar ano..."
+                    )
                 }
             }
 
@@ -231,20 +226,18 @@ fun NewEvaluationContent(
                     isDropdown = true,
                     onClick = { conditionMenuExpanded = true }
                 )
-                DropdownMenu(
-                    expanded = conditionMenuExpanded,
-                    onDismissRequest = { conditionMenuExpanded = false },
-                    modifier = Modifier.fillMaxWidth(0.8f)
-                ) {
-                    conditions.forEach { condition ->
-                        DropdownMenuItem(
-                            text = { Text(text = condition) },
-                            onClick = {
-                                onEvent(NewEvaluationUiEvent.OnConditionSelected(condition))
-                                conditionMenuExpanded = false
-                            }
-                        )
-                    }
+                if (conditionMenuExpanded) {
+                    FullScreenSelectDialogComponent(
+                        title = "Estado de Conservação",
+                        items = conditions,
+                        itemLabel = { it },
+                        onItemSelected = { condition ->
+                            onEvent(NewEvaluationUiEvent.OnConditionSelected(condition))
+                            conditionMenuExpanded = false
+                        },
+                        onDismissRequest = { conditionMenuExpanded = false },
+                        searchPlaceholder = "Buscar estado..."
+                    )
                 }
             }
             Spacer(modifier = Modifier.height(16.dp))
