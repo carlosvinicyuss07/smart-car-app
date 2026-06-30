@@ -123,7 +123,7 @@ fun ProfileScreenContent(
                     .padding(24.dp),
                 verticalArrangement = Arrangement.spacedBy(24.dp)
             ) {
-                // Info Card
+
                 Box(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -170,7 +170,6 @@ fun ProfileScreenContent(
                     }
                 }
 
-                // Account Management
                 Column(verticalArrangement = Arrangement.spacedBy(16.dp)) {
                     SubSectionTitleComponent(
                         title = "Gerenciamento de conta",

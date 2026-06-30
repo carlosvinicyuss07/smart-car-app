@@ -18,10 +18,15 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.SolidColor
+import androidx.compose.ui.text.TextRange
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
@@ -80,17 +85,34 @@ fun PriceInputComponent(
             Spacer(modifier = Modifier.width(12.dp))
             
             Box(modifier = Modifier.weight(1f)) {
-                if (value.isEmpty()) {
-                    Text(
-                        text = "0,00",
-                        style = MaterialTheme.typography.titleMedium.copy(fontSize = 18.sp),
-                        color = MaterialTheme.colorScheme.outlineVariant
+                var textFieldValueState by remember {
+                    androidx.compose.runtime.mutableStateOf(
+                        androidx.compose.ui.text.input.TextFieldValue(
+                            text = value.ifEmpty { "0,00" },
+                            selection = androidx.compose.ui.text.TextRange(value.ifEmpty { "0,00" }.length)
+                        )
                     )
                 }
-                
+
+                LaunchedEffect(value) {
+                    val textToSet = value.ifEmpty { "0,00" }
+                    if (textFieldValueState.text != textToSet) {
+                        textFieldValueState = textFieldValueState.copy(
+                            text = textToSet,
+                            selection = TextRange(textToSet.length)
+                        )
+                    }
+                }
+
                 BasicTextField(
-                    value = value,
-                    onValueChange = onValueChange,
+                    value = textFieldValueState,
+                    onValueChange = { newValue ->
+                        val textChanged = newValue.text != textFieldValueState.text
+                        if (textChanged) {
+                            onValueChange(newValue.text)
+                        }
+                        textFieldValueState = newValue.copy(selection = TextRange(newValue.text.length))
+                    },
                     singleLine = true,
                     keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
                     textStyle = MaterialTheme.typography.titleMedium.copy(
