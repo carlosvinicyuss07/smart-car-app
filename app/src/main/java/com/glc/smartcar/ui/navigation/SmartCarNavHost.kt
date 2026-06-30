@@ -71,7 +71,7 @@ fun SmartCarNavHost(startDestination: Any) {
                         }
                     )
                 }
-                
+
                 composable<AppRoute.NewEvaluation> {
                     NewEvaluationScreen(
                         onNavigateToDetails = { id ->
@@ -79,9 +79,15 @@ fun SmartCarNavHost(startDestination: Any) {
                         }
                     )
                 }
-                
+
                 composable<AppRoute.Profile> {
-                    ProfileScreen()
+                    ProfileScreen(
+                        onNavigateToLogin = {
+                            navController.navigate(AppRoute.AuthGraph) {
+                                popUpTo(AppRoute.MainGraph) { inclusive = true }
+                            }
+                        }
+                    )
                 }
 
                 composable<AppRoute.EvaluationDetails> {
