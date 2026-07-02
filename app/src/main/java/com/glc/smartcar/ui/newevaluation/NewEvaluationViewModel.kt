@@ -174,7 +174,21 @@ class NewEvaluationViewModel(
 
             when (val result = avaliacaoRepository.criarAvaliacao(request)) {
                 is Result.Success -> {
-                    _uiState.update { it.copy(isCalculating = false) }
+                    _uiState.update {
+                        it.copy(
+                            isCalculating = false,
+                            selectedBrand = null,
+                            selectedModel = null,
+                            selectedYear = null,
+                            models = emptyList(),
+                            years = emptyList(),
+                            mileage = "",
+                            condition = "",
+                            price = "",
+                            additionalNotes = "",
+                            isSubmitEnabled = false
+                        )
+                    }
                     _sideEffects.send(
                         NewEvaluationUiSideEffect.ShowToast("Avaliação criada com sucesso!")
                     )
